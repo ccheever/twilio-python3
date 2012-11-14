@@ -13,7 +13,11 @@ class Response(object):
     Take a httplib2 response and turn it into a requests response
     """
     def __init__(self, httplib_resp, content, url):
-        self.content = content
+        # (ccheever): I just decided that decoding in UTF-8 here was a 
+        # reasonable thing to do to avoid problems later on where a string
+        # was expected but the content was bytes. If there are problems with
+        # encodings, look here
+        self.content = content.decode("utf-8")
         self.cached = False
         self.status_code = int(httplib_resp.status)
         self.ok = self.status_code < 400

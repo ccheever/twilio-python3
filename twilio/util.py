@@ -1,7 +1,7 @@
 import base64
 import hmac
 import time
-import urllib
+import urllib.request, urllib.parse, urllib.error
 from hashlib import sha1
 
 try:
@@ -24,7 +24,7 @@ class RequestValidator(object):
 
         :returns: The computed signature
         """
-        s = unicode(uri)
+        s = str(uri)
         if len(params) > 0:
             for k, v in sorted(params.items()):
                 s += k + v
@@ -73,7 +73,7 @@ class TwilioCapability(object):
             scope = self.capabilities["outgoing"]
             scope.params["clientName"] = self.client_name
 
-        capabilities = self.capabilities.values()
+        capabilities = list(self.capabilities.values())
         scope_uris = [str(scope_uri) for scope_uri in capabilities]
 
         return {
@@ -103,7 +103,7 @@ class TwilioCapability(object):
             "appSid": application_sid,
         }
         if kwargs:
-            scope_params["appParams"] = urllib.urlencode(kwargs, doseq=True)
+            scope_params["appParams"] = urllib.parse.urlencode(kwargs, doseq=True)
 
         self.capabilities["outgoing"] = ScopeURI("client", "outgoing",
                                                  scope_params)
@@ -127,7 +127,7 @@ class TwilioCapability(object):
             "path": "/2010-04-01/Events",
         }
         if kwargs:
-            scope_params['params'] = urllib.urlencode(kwargs, doseq=True)
+            scope_params['params'] = urllib.parse.urlencode(kwargs, doseq=True)
 
         self.capabilities["events"] = ScopeURI("stream", "subscribe",
                                                scope_params)
@@ -141,6 +141,6 @@ class ScopeURI(object):
         self.params = params
 
     def __str__(self):
-        params = urllib.urlencode(self.params) if self.params else None
+        params = urllib.parse.urlencode(self.params) if self.params else None
         param_string = "?%s" % params if params else ''
         return "scope:%s:%s%s" % (self.service, self.privilege, param_string)

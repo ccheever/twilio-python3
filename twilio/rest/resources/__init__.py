@@ -3,8 +3,8 @@ import datetime
 import logging
 import twilio
 from twilio import TwilioException, TwilioRestException
-from urllib import urlencode
-from urlparse import urlparse
+from urllib.parse import urlencode
+from urllib.parse import urlparse
 
 from twilio.rest.resources.imports import (
     parse_qs, json, httplib2

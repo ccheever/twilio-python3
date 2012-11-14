@@ -1,6 +1,6 @@
 # parse_qs
 try:
-    from urlparse import parse_qs
+    from urllib.parse import parse_qs
 except ImportError:
     from cgi import parse_qs
 

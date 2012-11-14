@@ -30,7 +30,7 @@ class Verb(object):
             raise TwimlException("Invalid method parameter, "
                                  "must be 'GET' or 'POST'")
 
-        for k, v in kwargs.items():
+        for k, v in list(kwargs.items()):
             if k == "sender":
                 k = "from"
             if v is not None:
@@ -55,14 +55,14 @@ class Verb(object):
         xml = ET.tostring(self.xml()).encode("utf-8")
 
         if xml_declaration:
-            return u'<?xml version="1.0" encoding="UTF-8"?>' + xml
+            return '<?xml version="1.0" encoding="UTF-8"?>' + xml
         else:
             return xml
 
     def xml(self):
         el = ET.Element(self.name)
 
-        keys = self.attrs.keys()
+        keys = list(self.attrs.keys())
         keys.sort()
         for a in keys:
             value = self.attrs[a]

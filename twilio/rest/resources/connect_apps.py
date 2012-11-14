@@ -30,7 +30,7 @@ class AuthorizedConnectApp(ConnectApp):
         """ Translate certain parameters into others"""
         result = {}
 
-        for k, v in entries.iteritems():
+        for k, v in entries.items():
             k = k.replace("connect_app_", "")
             result[k] = v
 

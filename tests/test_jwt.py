@@ -4,7 +4,7 @@ if sys.version_info < (2, 7):
     import unittest2 as unittest
 else:
     import unittest
-import urllib
+import urllib.request, urllib.parse, urllib.error
 from twilio.util import TwilioCapability
 
 class TokenTest(unittest.TestCase):

@@ -1,6 +1,6 @@
 import logging
-from urlparse import urlparse
-from urllib import urlencode
+from urllib.parse import urlparse
+from urllib.parse import urlencode
 
 import twilio
 from twilio import TwilioException, TwilioRestException
@@ -37,11 +37,11 @@ def make_request(method, url,
 
     if data is not None:
         udata = {}
-        for k, v in data.iteritems():
+        for k, v in data.items():
             try:
-                udata[k.encode('utf-8')] = unicode(v).encode('utf-8')
+                udata[k.encode('utf-8')] = str(v).encode('utf-8')
             except UnicodeDecodeError:
-                udata[k.encode('utf-8')] = unicode(v, 'utf-8').encode('utf-8')
+                udata[k.encode('utf-8')] = str(v, 'utf-8').encode('utf-8')
         data = urlencode(udata)
 
     if params is not None:
@@ -136,11 +136,11 @@ class InstanceResource(Resource):
             parent.auth)
 
     def load(self, entries):
-        if "from" in entries.keys():
+        if "from" in list(entries.keys()):
             entries["from_"] = entries["from"]
             del entries["from"]
 
-        if "uri" in entries.keys():
+        if "uri" in list(entries.keys()):
             del entries["uri"]
 
         self.__dict__.update(entries)

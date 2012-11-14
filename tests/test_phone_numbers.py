@@ -1,4 +1,4 @@
-from __future__ import with_statement
+
 try:
     import json
 except ImportError:
